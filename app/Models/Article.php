@@ -10,7 +10,7 @@ class Article extends Model
     use HasFactory;
     public $timestamps = false;
 
-    protected $fillable = ['title', 'description', 'publishdate'];
+    protected $fillable = ['title', 'description', 'publishdate', 'created_at', 'updated_at'];
 
     public function comment()
     {

@@ -14,7 +14,10 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+
+        $articlesCount = Article::all()->count();
+        $articles = Article::all();
+        return view('index', compact('articles', 'articlesCount'));
     }
 
     /**
@@ -24,7 +27,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        return view('form');
     }
 
     /**
@@ -35,7 +38,8 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Article::create($request->only(['title', 'description', 'publishdate']));
+        return redirect()->route('articles.index')->withSuccess('New article was created');
     }
 
     /**
@@ -46,7 +50,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        //
+        return view('show', compact('article'));
     }
 
     /**
@@ -57,7 +61,7 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        return view('form', compact('article'));
     }
 
     /**
@@ -69,7 +73,8 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        //
+        $article->update($request->only(['title', 'description', 'publishdate']));
+        return redirect()->route('articles.index');
     }
 
     /**
@@ -80,6 +85,7 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        //
+        $article->delete();
+        return redirect()->route('articles.index')->withSuccess('Deleted article  '.$article->title);
     }
 }
